@@ -16,7 +16,8 @@ project-root/
 ├── 📊 train.csv                # Training dataset including target (Depression).
 ├── 🧪 test.csv                 # Test dataset for prediction.
 ├── 📝 sample_submission.csv    # Kaggle submission format.
-├── 🚀 sub.csv                  # Final output predictions for Kaggle.
+├── 🚀 sub.csv                  # Predictions from SCV model
+├── 🚀 sub1.csv                 # Predictions from Sequential model
 └── 📜 README.md                # Project documentation.
 
 ```
@@ -39,8 +40,11 @@ project-root/
     - `GridSearchCV`: Hyperparameter tuning
     - `LabelEncoder`: Encoding categorical features
     - `train_test_split`, `classification_report`, `ConfusionMatrixDisplay`: Model evaluation
-  - `warnings`: For suppressing unnecessary logs
-
+  - `keras`:  Deep Learning
+    -  `Sequential`: Layer-by-layer models
+    -  `Adam`: Optimizer for training
+    -  `Dense`: Fully connected layers
+    -  `to_categorical`: Convert labels for classification
 
 ---
 
@@ -64,12 +68,21 @@ The `Task.ipynb` notebook includes the following steps:
 - Ensured label consistency between train and test sets.
 
 
-### 3. 🤖 Model Building - Support Vector Classifier (SVC)
+### 3. 🤖 Model Building
+ 
+  #### Support Vector Classifier (SVC)
+  
 - Used `Pipeline` with `StandardScaler` and `SVC`.
 - Tuned hyperparameters with `GridSearchCV`:
   - `C`: `[1, 5, 10]`
   - `kernel`: `['linear', 'poly', 'rbf', 'sigmoid']`
   - `gamma`: `['scale', 'auto']`
+
+  #### Neural Network (Sequential)
+    - Used `Sequential` with `StandardScaler`.
+    -  `Adam` optimizer – efficient gradient-based optimization for training
+    -  `Dense` layers – fully connected layers for learning complex patterns
+    -  `to_categorical` – convert categorical labels for multi-class classification
 
 
 ### 4. 🧪 Evaluation
@@ -81,17 +94,19 @@ The `Task.ipynb` notebook includes the following steps:
 ### 5. 📤 Prediction & Submission
 - Final predictions generated on the test dataset.
 - Used `.predict` to obtain class labels for submission.
-- Saved results in `sub.csv` for Kaggle upload.
-
+- Saved SVC model predictions in `sub.csv` for Kaggle upload.
+- Saved Sequential model predictions in `sub1.csv` for Kaggle upload.
 
 
 ---
 
+
 ## 📈 Performance Summary
 
-| Model              | Algorithm             | Evaluation Metric     | Cross-Validation     | Output File   |
-|--------------------|-----------------------|-----------------------|----------------------|---------------|
-| SVC (with scaling) | Support Vector Machine | Accuracy (97%)       |  GridSearchCV        | `sub.csv`     |
+| Model                     | Algorithm                   | Score    | Output File |
+| ------------------------- | --------------------------- | -------- | ----------- |
+| SVC (with scaling)        | Support Vector Machine      | 0.967611 | `sub.csv`   |
+| Sequential (with scaling) | Neural Network (Sequential) | 0.968218 | `sub1.csv`  |
 
 
 ---
